@@ -39,14 +39,18 @@ class QADataset:
             question,
             context,
             add_special_tokens=True,
-            max_length=self.max_len,
-            pad_to_max_length=True
+            max_length=self.max_len
         )
 
         input_ids = input_dict["input_ids"]
         token_type_ids = input_dict["token_type_ids"]   # This alos represent what we call segment
         mask = input_dict["attention_mask"]
         all_tokens = self.tokenizer.convert_ids_to_tokens(input_ids)
+
+        padding_length = self.max_len - len(input_ids)
+        input_ids = input_ids + ([0] * padding_length)
+        token_type_ids = token_type_ids + ([0] * padding_length)
+        mask = mask + ([0] * padding_length)
 
         out = {
             "input_ids": torch.tensor(input_ids),

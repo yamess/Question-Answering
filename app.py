@@ -9,7 +9,7 @@ import torch.nn as nn
 import transformers
 from torch.utils.data import DataLoader,RandomSampler,SequentialSampler
 from torch.utils.tensorboard import SummaryWriter
-from transformers import BertTokenizer,BertForQuestionAnswering, \
+from transformers import BertTokenizer, BertForQuestionAnswering, \
     get_linear_schedule_with_warmup
 
 import squad.config as config
@@ -19,11 +19,11 @@ from squad.engine import qa_eval_loop, qa_train_loop,format_time
 
 
 def run(model):
-    df_train = pd.read_csv("data/data_train.csv", engine="python", encoding="utf-8")
-    # df_train = df_train_.loc[:2000, :]
+    df_train_ = pd.read_csv("data/data_train.csv", engine="python", encoding="utf-8")
+    df_train = df_train_.loc[:1000, :]
 
-    df_valid = pd.read_csv("data/data_valid.csv", engine="python", encoding="utf-8")
-    # df_valid = df_valid_.loc[:500, :]
+    df_valid_ = pd.read_csv("data/data_valid.csv", engine="python", encoding="utf-8")
+    df_valid = df_valid_.loc[:500, :]
     tokenizer = BertTokenizer.from_pretrained(config.BERT_TOK_PATH, lower=True)
 
     # Train Preprocessing
